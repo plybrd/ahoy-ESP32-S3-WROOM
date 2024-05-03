@@ -16,6 +16,31 @@ This work is licensed under a
 [dev-action-badge]: https://github.com/lumapu/ahoy/actions/workflows/compile_development.yml/badge.svg
 [dev-action-link]: https://github.com/lumapu/ahoy/actions/workflows/compile_development.yml
 
+# This Fork adds some information about building AhoyDTU with ESP32-S3-WROOM-1 and E49-900M20S
+
+- Tested with version 0.8.112 from branch 'development03'
+- Use environment 'opendtufusion' or 'opendtufusion-de'
+- One can use the build in USB for [flashing](https://docs.espressif.com/projects/esp-idf/en/stable/esp32s3/get-started/establish-serial-connection.html#:~:text=Flash%20Using%20USB&text=The%20USB%20on%20the%20ESP32,that%20release%20the%20BOOT%20button.)
+  - The USB on the ESP32-S3 uses the GPIO20 for D+ and GPIO19 for D-. If you are flashing for the first time, you need to get the ESP32-S3 into the download mode manually.
+  - To do so, press and hold the BOOT button and then press the RESET button once. After that release the BOOT button.
+  - That is: Connect the BOOT pin with GND. Then connect EN pin with GND. Release EN pin and after that release the BOOT pin. 
+
+![schematic](https://github.com/plybrd/ahoy-ESP32-S3-WROOM/blob/development03/doc/Wiring_ESP32_S3-CMT2300A.png) 
+(My [assembly](https://github.com/plybrd/ahoy-ESP32-S3-WROOM/blob/development03/doc/Aufbau_ESP32_S3-CMT2300A.png))
+
+Restart ESP32-S3 after flashing. The setup works as usual. In `Settings` disable nRF24L01+ and enable CMT2300A. The pin settings are
+
+| Signal |Pin |
+|---|---|
+|SCLK| GPIO12|
+|SDIO| GPIO13 (MISO)|
+|CSB | GPIO10 (CS)|
+|FCSB| GPIO48|
+|IRQ | GPIO21 |
+
+We use SPI2 main interface (Group 5e) for fast SPI (FSPI) connection.
+See [ESP32-S3 datasheet](https://www.espressif.com/sites/default/files/documentation/esp32-s3_datasheet_en.pdf) (p. 17).
+
 
 # 🖐 Ahoy!
 ![Logo](https://github.com/lumapu/ahoy/blob/main/doc/logo1_small.png?raw=true)
